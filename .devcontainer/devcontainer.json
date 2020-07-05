@@ -1,0 +1,43 @@
+{
+  "name": "workspace_docker",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "remoteUser": "developer",
+  "settings": {
+    "terminal.integrated.shell.linux": null,
+    "java.home": "/home/developer/Extra/GraalVM",
+    "maven.executable.path": "/home/Extra/Maven/bin/mvn",
+    "files.exclude": {
+      "**/target": true,
+      "**/.mvn": true,
+      "**/.settings": true,
+      "**/.classpath": true,
+      "**/.factorypath": true,
+      "**/.project": true
+    },
+    "editor.fontLigatures": true,
+    "editor.quickSuggestionsDelay": 1,
+    "editor.tabSize": 2,
+    "editor.cursorStyle": "line",
+    "editor.cursorBlinking": "solid",
+    "editor.fontWeight": "300"
+  },
+  "extensions": [
+    "dart-code.flutter",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-rename-tag",
+    "alphabotsec.vscode-eclipse-keybindings",
+    "dart-code.dart-code",
+    "redhat.vscode-quarkus",
+    "vscjava.vscode-maven",
+    "redhat.java",
+    "vscjava.vscode-java-test",
+    "vscjava.vscode-java-dependency",
+    "vscjava.vscode-java-debug",
+    "esbenp.prettier-vscode",
+    "gabrielbb.vscode-lombok",
+    "kie-group.vscode-extension-kogito-bundle"
+  ],
+  "workspaceFolder": "/home/developer/workspace",
+  "shutdownAction": "stopCompose"
+}
