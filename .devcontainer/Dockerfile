@@ -1,6 +1,8 @@
 FROM ubuntu:18.04
 
-RUN apt update && apt install -y curl git unzip xz-utils zip libglu1-mesa openjdk-8-jdk wget nano
+RUN apt update --fx-missing && apt install -y curl git unzip xz-utils zip libglu1-mesa openjdk-8-jdk wget nano
+
+RUN apt install -y build-essential libz-dev zlib1g-dev
 
 # Set up new user
 RUN useradd -ms /bin/bash developer
@@ -13,6 +15,7 @@ RUN curl -O -L https://github.com/graalvm/graalvm-ce-builds/releases/download/vm
 RUN tar xvfz graalvm-ce-java11-linux-amd64-20.1.0.tar.gz && rm graalvm-ce-java11-linux-amd64-20.1.0.tar.gz
 RUN mv graalvm-ce-java11-20.1.0/ Extra/GraalVM
 ENV PATH "/home/developer/Extra/GraalVM/bin:$PATH"
+RUN gu install native-image
 
 # Install maven
 RUN curl -O -L https://downloads.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz

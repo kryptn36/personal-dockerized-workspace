@@ -6,7 +6,7 @@
   "settings": {
     "terminal.integrated.shell.linux": null,
     "java.home": "/home/developer/Extra/GraalVM",
-    "maven.executable.path": "/home/Extra/Maven/bin/mvn",
+    "maven.executable.path": "/home/developer/Extra/Maven/bin/mvn",
     "files.exclude": {
       "**/target": true,
       "**/.mvn": true,
