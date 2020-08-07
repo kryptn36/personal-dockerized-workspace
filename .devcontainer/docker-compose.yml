@@ -1,31 +1,86 @@
 version: '3'
 services:
+  dns:
+    image: defreitas/dns-proxy-server
+    container_name: dns-proxy-server
+    hostname: "${DNS_HOST}"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/resolv.conf:/etc/resolv.conf
+    ports:
+      - "5380:5380"
   dev:
     container_name: dev_environment
+    hostname: ${DEV_HOST}
     build:
       context: .
       dockerfile: Dockerfile
-    links:
-      - mariadb
     privileged: true
     volumes:
       - ../workspace:/home/developer/workspace:delegated
       - /dev/bus/usb:/dev/bus/usb:delegated
     command: sleep infinity
-    ports:
-      - "3000:3000"
+    depends_on:
+      - mariadb
+      - keycloak
+      - dns
+    networks:
+      backend:
+        aliases:
+          - ${DEV_HOST}
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    hostname: "${KEYCLOAK_HOST}"
+    environment:
+      DB_VENDOR: mariadb
+      DB_ADDR: "${MARIADB_HOST}"
+      DB_DATABASE: keycloak
+      DB_USER: dev
+      DB_PASSWORD: dev
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: password
+    depends_on:
+      - mariadb
+      - dns
+    networks:
+      backend:
+        aliases:
+          - "${KEYCLOAK_HOST}"
   mariadb:
     image: mariadb:latest
+    container_name: mariadb
+    hostname: "${MARIADB_HOST}"
     restart: unless-stopped
-    container_name: dev_environment_db
     volumes:
       - dev_db_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
+      - ./init:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: dev
       MYSQL_USER: dev
       MYSQL_PASSWORD: dev
+    depends_on:
+      - dns
+    networks:
+      backend:
+        aliases:
+          - "${MARIADB_HOST}"
+  adminer:
+    container_name: adminer
+    hostname: "${ADMINER_HOST}"
+    image: adminer
+    restart: always
+    depends_on:
+      - dns
+    networks:
+      backend:
+        aliases:
+          - "${ADMINER_HOST}"
+
 volumes:
   dev_db_data:
+
+networks:
+  backend:
+    driver: bridge
