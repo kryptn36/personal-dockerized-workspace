@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-RUN apt update --fx-missing && apt install -y curl git unzip xz-utils zip libglu1-mesa openjdk-8-jdk wget nano
+RUN apt update --fix-missing && apt install -y curl git unzip xz-utils zip libglu1-mesa openjdk-8-jdk wget nano
 
 RUN apt install -y build-essential libz-dev zlib1g-dev
 
