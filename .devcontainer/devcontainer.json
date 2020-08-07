@@ -36,7 +36,8 @@
     "vscjava.vscode-java-debug",
     "esbenp.prettier-vscode",
     "gabrielbb.vscode-lombok",
-    "kie-group.vscode-extension-kogito-bundle"
+    "kie-group.vscode-extension-kogito-bundle",
+    "dotjoshjohnson.xml"
   ],
   "workspaceFolder": "/home/developer/workspace",
   "shutdownAction": "stopCompose"
